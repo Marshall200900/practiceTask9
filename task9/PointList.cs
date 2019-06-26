@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace task9
 {
-    class PointList:IEnumerable<Point>
+    public class PointList:IEnumerable<Point>
     {
         /// <summary>
         /// Размер циклического списка
@@ -16,11 +16,11 @@ namespace task9
         /// <summary>
         /// Первый элемент списка
         /// </summary>
-        public Point Head { get; set; }
+        private Point Head { get;set ; }
         /// <summary>
         /// Последний элемент списка
         /// </summary>
-        public Point Tail { get; set; }
+        private Point Tail { get; set; }
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -29,6 +29,24 @@ namespace task9
             Head = null;
             Tail = null;
             Count = 0;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        public void Add(Point p)
+        {
+            Count++;
+            p.Next = Head;
+            if (Head != null)
+            {
+                Tail.Next = p;
+                Tail = p;
+            }
+            else
+            {
+                Head = Tail = p;
+            }
         }
         /// <summary>
         /// Добавление элементов в циклический список. Каждый следующий элемент добавляется в конец
@@ -60,8 +78,7 @@ namespace task9
             if (index == 0)
             {
                 Head = Head.Next;
-                while (point.Next != Head)
-                    point = point.Next;
+                point = Tail;
                 point.Next = Head;
             }
             else
@@ -69,13 +86,56 @@ namespace task9
                 while (index != 1)
                 {
                     point = point.Next;
+                    index--;
                 }
                 point.Next = point.Next.Next;
             }
             Count--;
             
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool Find(Point p)
+        {
+            Point point = Head;
+            int sizeTemp = Count;
 
+            while (sizeTemp != 0)
+            {
+                if (p.Equals(point))
+                {
+                    return true;
+                }
+                point = point.Next;
+                sizeTemp--;
+            }
+            return false;
+        }
+        public Point FindByIndex(int index)
+        {
+            if (index >= Count || index<0)
+            {
+                return null;
+            }
+            else
+            {
+                Point point = Head;
+                int i = 0;
+                while (i != Count)
+                {
+                    if (index == i)
+                    {
+                        return point;
+                    }
+                    point = point.Next;
+                    i++;
+                }
+                return null;
+            }
+            
+        } 
         /// <summary>
         /// Enumerator
         /// </summary>

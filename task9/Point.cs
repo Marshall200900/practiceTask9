@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace task9
 {
-    class Point
+    public class Point
     {
         /// <summary>
         /// Значение текущего элемента
